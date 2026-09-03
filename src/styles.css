@@ -145,11 +145,6 @@
   }
 }
 
-@utility font-display {
-  font-family: var(--font-display);
-  font-weight: 300;
-}
-
 @utility text-balance-tight {
   text-wrap: balance;
 }
