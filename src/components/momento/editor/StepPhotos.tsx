@@ -44,7 +44,10 @@ export function StepPhotos({
     const target = index + dir;
     if (target < 0 || target >= photos.length) return;
     const next = [...photos];
-    [next[index], next[target]] = [next[target], next[index]];
+    const a = next[index] as CardPhoto;
+    const b = next[target] as CardPhoto;
+    next[index] = b;
+    next[target] = a;
     setPhotos(next);
   };
 

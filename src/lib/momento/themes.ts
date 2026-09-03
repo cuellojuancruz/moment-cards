@@ -59,7 +59,7 @@ export const THEMES: CardTheme[] = [
 ];
 
 export const getTheme = (id: ThemeId): CardTheme =>
-  THEMES.find((t) => t.id === id) ?? THEMES[0];
+  THEMES.find((t) => t.id === id) ?? (THEMES[0] as CardTheme);
 
 export interface Occasion {
   id: OccasionId;
@@ -115,4 +115,4 @@ export const OCCASIONS: Occasion[] = [
 ];
 
 export const getOccasion = (id: OccasionId): Occasion =>
-  OCCASIONS.find((o) => o.id === id) ?? OCCASIONS[0];
+  OCCASIONS.find((o) => o.id === id) ?? (OCCASIONS[0] as Occasion);

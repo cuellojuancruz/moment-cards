@@ -20,15 +20,14 @@ export function CardExperience({ card, embedded = false }: { card: Card; embedde
   );
 
   useEffect(() => {
-    if (stage === "reveal") {
-      const t = setTimeout(() => setStage("message"), 3200);
-      return () => clearTimeout(t);
-    }
+    if (stage !== "reveal") return undefined;
+    const t = setTimeout(() => setStage("message"), 3200);
+    return () => clearTimeout(t);
   }, [stage]);
 
   const next = () => {
     const i = STAGES.indexOf(stage);
-    setStage(STAGES[Math.min(i + 1, STAGES.length - 1)]);
+    setStage(STAGES[Math.min(i + 1, STAGES.length - 1)] as Stage);
   };
 
   return (
