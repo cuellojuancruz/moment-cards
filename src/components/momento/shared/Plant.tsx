@@ -63,23 +63,23 @@ export function Plant({ stage, className = "" }: { stage: number; className?: st
         transition={{ duration: 1.8 * s, ease: EASE }}
       />
       {leaves.map((leaf, i) => (
-        <motion.path
+        <g
           key={`l-${i}`}
-          d="M0 0 C 16 -12, 34 -8, 40 2 C 30 12, 12 12, 0 0 Z"
-          fill="color-mix(in oklab, var(--accent) 55%, var(--primary))"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={
-            stage >= leaf.at ? { scale: 1, opacity: 0.92 } : { scale: 0, opacity: 0 }
-          }
-          transition={{ duration: 1.1 * s, delay: 0.25 * i * s, ease: EASE }}
-          style={{
-            transformOrigin: `${leaf.x}px ${leaf.y}px`,
-            transform: `translate(${leaf.x}px, ${leaf.y}px) rotate(${leaf.rot}deg) scaleX(${
-              leaf.rot < 0 ? -1 : 1
-            })`,
-          }}
-        />
+          transform={`translate(${leaf.x} ${leaf.y}) rotate(${leaf.rot}) scale(${
+            leaf.rot < 0 ? -1 : 1
+          } 1)`}
+        >
+          <motion.path
+            d="M0 0 C 16 -12, 34 -8, 40 2 C 30 12, 12 12, 0 0 Z"
+            fill="color-mix(in oklab, var(--accent) 55%, var(--primary))"
+            initial={{ scale: 0, opacity: 0 }}
+            animate={stage >= leaf.at ? { scale: 1, opacity: 0.92 } : { scale: 0, opacity: 0 }}
+            transition={{ duration: 1.1 * s, delay: 0.25 * i * s, ease: EASE }}
+            style={{ transformOrigin: "0px 0px" }}
+          />
+        </g>
       ))}
+
       {flowers.map((f, i) => (
         <motion.g
           key={`f-${i}`}
