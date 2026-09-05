@@ -63,22 +63,30 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
+/*
+ * Her colour is blue, so blue is the whole world here rather than an accent
+ * on top of a neutral one.
+ *
+ * --primary is the light in the experience: the glow, the dust, the petals,
+ * the flowers, the two buttons. --accent leans green-cyan so that leaves and
+ * stems read as living things without ever leaving the blue family.
+ */
 :root {
   --radius: 1rem;
-  --background: oklch(0.17 0.055 255);
-  --foreground: oklch(0.96 0.015 250);
-  --card: oklch(0.24 0.06 258);
-  --card-foreground: oklch(0.96 0.015 250);
-  --popover: oklch(0.24 0.06 258);
-  --popover-foreground: oklch(0.96 0.015 250);
-  --primary: oklch(0.74 0.115 245);
-  --primary-foreground: oklch(0.17 0.055 255);
+  --background: oklch(0.115 0.036 262);
+  --foreground: oklch(0.965 0.012 250);
+  --card: oklch(0.22 0.055 258);
+  --card-foreground: oklch(0.965 0.012 250);
+  --popover: oklch(0.22 0.055 258);
+  --popover-foreground: oklch(0.965 0.012 250);
+  --primary: oklch(0.76 0.115 248);
+  --primary-foreground: oklch(0.15 0.05 258);
   --secondary: oklch(0.29 0.055 256);
-  --secondary-foreground: oklch(0.96 0.015 250);
+  --secondary-foreground: oklch(0.965 0.012 250);
   --muted: oklch(0.27 0.05 256);
-  --muted-foreground: oklch(0.79 0.04 250);
-  --accent: oklch(0.82 0.08 210);
-  --accent-foreground: oklch(0.18 0.055 255);
+  --muted-foreground: oklch(0.76 0.035 250);
+  --accent: oklch(0.8 0.085 192);
+  --accent-foreground: oklch(0.16 0.05 258);
   --destructive: oklch(0.6 0.19 25);
   --destructive-foreground: oklch(0.97 0.01 250);
   --border: oklch(0.36 0.05 255);
@@ -98,7 +106,6 @@
   --sidebar-border: oklch(0.929 0.013 255.508);
   --sidebar-ring: oklch(0.704 0.04 256.788);
 }
-
 
 .dark {
   --background: oklch(0.129 0.042 264.695);
@@ -150,9 +157,140 @@
   text-wrap: balance;
 }
 
+/* ------------------------------------------------------------------ *
+ * The scale of the composition.
+ *
+ * On a phone the binding constraint is the *height* of the screen — a print
+ * sized only by width pushes the words off the bottom — so these are written
+ * in dvh. On a desktop the opposite is true: height is abundant, the window
+ * is wide, and the thing that matters is how large the letter reads from
+ * arm's length. So above 1024px they become generous fixed sizes, with a dvh
+ * guard to catch short laptop windows.
+ *
+ * Sizes that depend on a photograph's proportions are stored as the target
+ * HEIGHT; the component multiplies by that picture's own aspect to get its
+ * width. That is what keeps a landscape, a 3:4 and a 9:16 print the same size
+ * on screen as each other.
+ * ------------------------------------------------------------------ */
+/* a phone */
+:root {
+  /* type */
+  --fs-body: 1.075rem;
+  --fs-display: 1.95rem;
+  --fs-hero: 2.5rem;
+  --fs-small: 0.72rem;
+  --gap: 1.75rem;
+  --control-h: 3.5rem;
+  /* width of the reading column */
+  --measure: 28rem;
+  /* one print on its own */
+  --photo-cap: 16rem;
+  --photo-h: 38dvh;
+  /* two prints side by side */
+  --pair-h: 30dvh;
+  --family-h: min(14rem, 57vw, 34dvh);
+  /* the row of three in the epilogue */
+  --strip-h: min(6.5rem, 13dvh);
+  /* drawn things */
+  --plant-w: min(13rem, 24dvh);
+  --plant-bloom-w: min(14rem, 28dvh);
+  --flower-w: min(8.5rem, 17dvh);
+  --envelope-w: min(19rem, 78vw, 44dvh);
+}
+
+/* a big phone or a tablet */
+@media (min-width: 640px) {
+  :root {
+    --fs-body: 1.15rem;
+    --fs-display: 2.25rem;
+    --fs-hero: 3.25rem;
+  }
+}
+
+/*
+ * A computer.
+ *
+ * A wide window is not necessarily a tall one — a 1366×768 laptop leaves
+ * barely 650px of viewport once the browser takes its share — so this tier is
+ * sized to fit a short window, and everything carries a dvh guard on top of
+ * its fixed size. The rem value is what a roomy screen gets; the dvh value is
+ * what rescues a cramped one.
+ */
+@media (min-width: 1024px) {
+  :root {
+    --fs-body: 1.2rem;
+    --fs-display: 2.4rem;
+    --fs-hero: 3.4rem;
+    --fs-small: 0.8rem;
+    --gap: 2rem;
+    --control-h: 4rem;
+    --measure: 34rem;
+    --photo-cap: 30rem;
+    --photo-h: 47dvh;
+    --pair-h: min(20rem, 38dvh);
+    --family-h: min(18rem, 34dvh);
+    --strip-h: min(9rem, 13dvh);
+    --plant-w: min(18rem, 29dvh);
+    --plant-bloom-w: min(19rem, 31dvh);
+    --flower-w: min(12rem, 18dvh);
+    --envelope-w: min(25rem, 40dvh);
+  }
+}
+
+/* A computer with room to breathe: a real monitor, or a maximised window. */
+@media (min-width: 1024px) and (min-height: 860px) {
+  :root {
+    --fs-body: 1.3rem;
+    --fs-display: 2.9rem;
+    --fs-hero: 4.2rem;
+    --fs-small: 0.82rem;
+    --gap: 2.75rem;
+    --control-h: 4.25rem;
+    --photo-h: 48dvh;
+    --pair-h: min(22rem, 40dvh);
+    --family-h: min(20rem, 38dvh);
+    --strip-h: min(11rem, 16dvh);
+    --plant-w: min(21rem, 34dvh);
+    --plant-bloom-w: min(23rem, 36dvh);
+    --flower-w: min(15rem, 24dvh);
+    --envelope-w: min(28rem, 46dvh);
+  }
+}
+
 @layer base {
+  html,
+  body {
+    height: 100%;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    /* The experience owns the viewport: the scenes are what scroll, if
+       anything does, and the page itself never moves sideways or rubber-bands. */
+    overflow: hidden;
+    overscroll-behavior: none;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--primary) 35%, transparent);
+  }
+}
+
+/* Movement is handled per-component, but this catches anything with a CSS
+   animation of its own. Reading pace is deliberately left alone. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

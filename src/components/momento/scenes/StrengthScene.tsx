@@ -1,34 +1,54 @@
+import { useState } from "react";
 import { SceneShell } from "../shared/SceneShell";
-import { Lines } from "../shared/Lines";
-import { Reveal } from "../shared/Reveal";
 import { ContinueButton } from "../shared/ContinueButton";
-import { totalDelay, type Line } from "../shared/motion";
+import { Script, type Stanza } from "../shared/Script";
 
-const LINES: Line[] = [
-  { text: "A pesar de todas las cosas que te tocó enfrentar…", pause: 1.6 },
-  { text: "Siempre encontraste la forma de seguir." },
-  { text: "Llevás meses preparándote." },
-  { text: "No llegaste hasta acá por casualidad." },
-  { text: "Todo el esfuerzo que hiciste cuenta." },
-  { text: "Todo lo que aprendiste cuenta." },
-  { text: "Todas las veces que seguiste adelante aunque estabas cansada cuentan." },
-  { text: "Y eso es algo que admiro muchísimo de vos.", pause: 1.2, emphasis: true },
+/**
+ * Not "you have to be strong" — she has heard that from everyone.
+ * This is the evidence that she already was.
+ */
+const STANZAS: Stanza[] = [
+  {
+    lead: 1.3,
+    lines: [{ text: "Nunca te vi rendirte.", weight: "hero" }],
+    // The load-bearing lines carry a much larger hold than the rest, so that
+    // cutting BREATH speeds up the letter without flattening its peaks.
+    hold: 6,
+  },
+  {
+    lines: [
+      { text: "A pesar de todas las cosas que te tocó enfrentar…" },
+      { text: "Siempre encontraste la forma de seguir.", pause: 0.9 },
+    ],
+    hold: 2,
+  },
+  {
+    lines: [
+      { text: "Llevás meses preparándote." },
+      { text: "No llegaste hasta acá por casualidad.", pause: 0.6 },
+    ],
+    hold: 2.2,
+  },
+  {
+    lines: [
+      { text: "Todo el esfuerzo que hiciste cuenta." },
+      { text: "Todo lo que aprendiste cuenta." },
+      { text: "Todas las veces que seguiste adelante aunque estabas cansada cuentan." },
+    ],
+    hold: 2.4,
+  },
+  {
+    lines: [{ text: "Y eso es algo que admiro muchísimo de vos.", weight: "display", pause: 0.7 }],
+  },
 ];
 
 export function StrengthScene({ onNext }: { onNext: () => void }) {
+  const [settled, setSettled] = useState(false);
+
   return (
-    <SceneShell
-      background="radial-gradient(120% 100% at 50% 18%, oklch(0.33 0.075 248) 0%, oklch(0.18 0.055 254) 76%)"
-      intensity={0.5}
-      align="start"
-    >
-      <Reveal delay={0.5} duration={2} y={22} className="pt-10">
-        <p className="font-[family-name:var(--font-display)] text-[2.6rem] leading-[1.1] text-foreground sm:text-5xl">
-          Nunca te vi rendirte.
-        </p>
-      </Reveal>
-      <Lines lines={LINES} start={2.6} />
-      <ContinueButton delay={totalDelay(LINES, 2.6)} onClick={onNext} />
+    <SceneShell tone="strength">
+      <Script stanzas={STANZAS} onSettled={() => setSettled(true)} />
+      <ContinueButton show={settled} onClick={onNext} />
     </SceneShell>
   );
 }

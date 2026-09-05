@@ -1,10 +1,11 @@
 import type { ReactNode } from "react";
 import { motion } from "motion/react";
-import { EASE, useMotionScale } from "./motion";
+import { EASE, useMotionPrefs } from "./motion";
 
+/** A single element surfacing out of the dark. The one entrance used everywhere. */
 export function Reveal({
   delay = 0,
-  duration = 1.4,
+  duration = 1.5,
   y = 14,
   blur = 8,
   className,
@@ -17,12 +18,12 @@ export function Reveal({
   className?: string;
   children: ReactNode;
 }) {
-  const scale = useMotionScale();
+  const m = useMotionPrefs();
   return (
     <motion.div
-      initial={{ opacity: 0, y: y * scale, filter: `blur(${blur * scale}px)` }}
+      initial={{ opacity: 0, y: m.px(y), filter: `blur(${m.blur(blur)}px)` }}
       animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      transition={{ duration: duration * scale, delay: delay * scale, ease: EASE }}
+      transition={{ duration: m.dur(duration), delay, ease: EASE }}
       className={className}
     >
       {children}
